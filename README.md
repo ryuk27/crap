@@ -16,19 +16,12 @@ This repository contains all lab work for the **Third Year - Information Technol
 TE-IT-6th-Sem-Labs/
 │
 ├── DSBDA/
-│   ├── Practical01/
-│   ├── Practical02/
-│   ├── ...
-│   └── Practical07/
+│   ├── A- Hadoop/Cloudera/
+│   ├── B- Python/
+│   ├── C- Tableau/
 │
 ├── WAD/
-│   ├── Practical01/
-│   ├── Practical02/
-│   ├── ...
-│   └── PracticalX/
+│   ├── Not yet added/
 │
 └── CC/
-    ├── Practical01/
-    ├── Practical02/
-    ├── ...
-    └── PracticalX/
+    ├── Not yet added/
