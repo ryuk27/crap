@@ -1,8 +1,6 @@
 
 # 🐘 Cloudera Hive Practical – README
 
-This document contains all Hive commands executed in the Cloudera environment for your practicals. Each section is labeled and contains the command followed by its **significance** for clarity and understanding.
-
 ---
 
 ## 🅐 Create, Drop and Alter Tables
@@ -185,7 +183,7 @@ hive> select * from hive_ext;
 ## 🅔 Find the average departure delay per day in 2008
 
 ```bash
-//Open A Terminal, that's Terminal 1 for you
+//Open A Terminal, that is Terminal 1 for you
 [cloudera@quickstart ~]$ hdfs dfs -mkdir /HiveDirectory
 ```
 **▶️ Significance:** Creates a new directory in HDFS for storing Hive data.
@@ -201,7 +199,7 @@ hive> select * from hive_ext;
 ```
 **▶️ Significance:** Reopens Hive shell.
 
-```sql
+```bash
 hive> create external table emplist (Id int, Name string , Salary float)
     > row format delimited
     > fields terminated by ',' 
@@ -209,12 +207,12 @@ hive> create external table emplist (Id int, Name string , Salary float)
 ```
 **▶️ Significance:** Creates an external table `emplist` using data from `/HiveDirectory`.
 
-```sql
+```bash
 hive> select * from emplist;
 ```
 **▶️ Significance:** Displays contents of `emplist` (if data was successfully loaded).
 
-```sql
+```bash
 hive> CREATE TABLE flight_data(
     >    year INT,
     >    month INT,
@@ -250,20 +248,20 @@ hive> CREATE TABLE flight_data(
     > FIELDS TERMINATED BY ',';
 ```
 **▶️ Significance:** Defines the structure of the `flight_data` table. It maps each column in the CSV file to its corresponding data type. The use of `ROW FORMAT DELIMITED` and `FIELDS TERMINATED BY ','` specifies that the data is in CSV format.
-```sql
+```bash
 //Now open another terminal, that's terminal 2 for you
 hive> [cloudera@quickstart ~]$ hive
 ```
 **▶️ Significance:** You open a new Hive shell session in another terminal to continue executing commands. This simulates a typical use case where Hive runs independently from the file system terminal.
-```sql
+```bash
 //NEED A CSV FILE TO PERFORM, HERE IT IS 2008.CSV, MUST BE GIVEN TO YOU BY EXAMINER
 hive> LOAD DATA LOCAL INPATH '/home/cloudera/2008.csv' OVERWRITE INTO TABLE flight_data;
 ```
 **▶️ Significance:** Loads data from the local file system into the `flight_data` Hive table. The `OVERWRITE` keyword ensures any previous data in the table is replaced with this fresh dataset.
-```sql
+```bash
 hive> SHOW TABLES;
 ```
-```sql
+```bash
 hive> SELECT avg(arr_delay)
     FROM flight_data
     WHERE month = 1
