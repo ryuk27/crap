@@ -1,7 +1,7 @@
 ## Begin With
 - Open Tableau and load the adult_dataset.csv and Adult_NW1.csv. in it
 - Drag the Adult_NW1.csv to the interface and make a relation of both files as shown below.
-- ![Image](https://github.com/user-attachments/assets/4ffdcbd0-1792-4c4c-8ddd-85f66f4244a2)
+  ![Image](https://github.com/user-attachments/assets/4ffdcbd0-1792-4c4c-8ddd-85f66f4244a2)
 
 ## b. 2D (Planar) Data Visualization
 - Load the dataset into Tableau.
