@@ -3,43 +3,51 @@
 - Drag the Adult_NW1.csv to the interface and make a relation of both files as shown below.
   ![Image](https://github.com/user-attachments/assets/4ffdcbd0-1792-4c4c-8ddd-85f66f4244a2)
 
-## b. 2D (Planar) Data Visualization
-- Load the dataset into Tableau.
-- Select two dimensions or measures, such as Age and Education (Adult dataset) or Sepal Length and Sepal Width (Iris dataset).
-- Drag one dimension (e.g., Age) to the Columns shelf and the second (e.g., Education) to the Rows shelf.
-- Tableau will display a scatter plot or other appropriate visualization type.
-- You can customize the axes, add color or size encoding, and adjust the marks for better representation.
+### 1. 1D Visualization
+- Add `Age` in ROWS and `Race` in Color section.
+- Visualization : `Stacked Bars`
+  ![Image](https://github.com/user-attachments/assets/1fbdbeca-a1c5-4874-87f8-2d52bb8f9a36)
 
-## c. 3D (Volumetric) Data Visualization
-- Tableau doesn't natively support 3D visualizations, but you can simulate 3D effects.
-- Choose three variables, like Age, Education, and Hours per Week (Adult dataset) or Sepal Length, Sepal Width, and Petal Length (Iris dataset).
-- Place one measure in the Columns shelf, another in the Rows shelf, and the third in the "Size" or "Color" shelf.
-- Use a scatter plot or bubble chart to give a visual sense of 3D.
-- To enhance the 3D effect, use depth cues like color gradients or size variations.
+### 2. 2D Visualization
+- Add `Occupation` in COLUMNS and `Age` in ROWS.
+- **Income** in Color and `Race` in Label.
+- Visualization : No need to change.
+  ![Image](https://github.com/user-attachments/assets/02a44b33-6b1a-40af-b61a-8283c9af2526)
 
-## d. Temporal Data Visualization
-- For temporal analysis, ensure your dataset contains time-related data. In the Adult dataset, you could use Age, or for the Iris dataset, you might need to add a date attribute manually if not available.
-- Drag the time-based dimension (e.g., Year or Age in intervals) to the Columns shelf.
-- Drag a measure like Income or Sepal Length to the Rows shelf.
-- Tableau will create a time series visualization like a line chart.
-- Adjust the axis to show the appropriate time intervals and customize the chart with color, tooltips, and labels.
+### 3. 3D Visualization
+- Add `Occupation` and `Marital-Status` in COLUMNS and `Age` in ROWS.
+- `Race` in Color.
+- Visualization : No need to change.
+  ![Image](https://github.com/user-attachments/assets/6398fde1-8eeb-499c-929b-d9988f00899f)
 
-## e. Multidimensional Data Visualization
-- Multidimensional visualization allows for more complex interactions between multiple dimensions and measures.
-- Use dimensions such as Age, Education, and Hours per Week (Adult dataset) or Sepal Length, Petal Width, and Species (Iris dataset).
-- Drag dimensions to the Rows and Columns shelves and measures to the "Color" or "Size" shelf.
-- A good example of this is a heatmap or a packed bubble chart.
-- Customize the view by adjusting colors, shapes, and filters.
+### 4. Tree/ Hierarchical Data Visualization
+- Add `Age` to Color and Size, `Income` and `Occupation` in Label.
+- Visualization : No need to change, by default Treemap is selected.
+  ![Image](https://github.com/user-attachments/assets/efd4edb5-37fa-4590-b1d1-d6b0defbb3be)
 
-## f. Tree/ Hierarchical Data Visualization
-- Hierarchical data is used to visualize relationships like categories or subcategories.
-- In the Adult dataset, you can use Education levels as a hierarchical dimension.
-- Drag "Education" to the Rows shelf and use the "Detail" shelf to add subcategories like "Education-Num."
-- Choose a Treemap or Sunburst chart from the "Show Me" tab to represent the hierarchy.
-- Customize the hierarchy to allow for drill-down features.
+### 5. Network Data Visualization
+- Add `Line X` in COLUMNS, right click and check for Dimension and Continuous.
+- Add `Line Y` and **Circle Y** in ROWS and do the same, then right click on `Circle Y` and click on `Dual Axis`.
+- In Marks field, click on `Line Y` and change Automatic to Line, add `Measure Names` in Color `Relationship1` in Detail.
+- Click on `Circle Y` and change Automatic to Circle, add `Node` in Color and Lable part, `Relationship1` in Detail.
+- Visualization : Default
+  ![Image](https://github.com/user-attachments/assets/9db704e6-7905-45ef-94df-c2b7534c3093)
 
-## g. Network Data Visualization
-- Network data visualizations focus on the relationships between entities. While this type of data is not natively part of the Adult or Iris dataset, you can simulate network connections using categorical data.
-- Create a relationship between two dimensions (e.g., Age and Education) or create custom network data.
-- Use a scatter plot or path analysis to visualize connections.
-- Customize the view with lines or arrows connecting related entities, adjusting color to represent different relationships.
+### 6. Multidimensional Visualization
+- Add `Hours-Per-Week` in COLUMNS, right click and chose AVG for it.
+- Add `Age` in ROWS, right click and chose AVG for it.
+- In Filters, add `Gender`, in Colors add `Education`, in Size add `SUM(Capital-Gain)`, in Tooltip add `Income`, `Occupation` and `Race` and set the to ATTRIBUTE, finally add `Node` in Detail.
+- Visualization : Default
+  ![Image](https://github.com/user-attachments/assets/dbc0e7b8-09b4-45ff-85a0-990a11c4032b)
+
+### 7. Temporal Visualization
+- Right-click anywhere in the Data pane
+- Select "Create Calculated Field...".
+- In the dialog box: Name the field and Enter the formula - `1994 - [Age]`
+- Here it is named as `Year of Birth`, add it in COLUMNS and `Occupation` in ROWS, right click on it and change to CNTD.
+- Add `Education` and `Gender` in Filters and `Income` in Colors.
+- Visualization : Line Continuous
+  ![Image](https://github.com/user-attachments/assets/91a6c340-d748-49ce-bf4d-70ed12a13512)
+
+### Final Dashboard Creation
+![Image](https://github.com/user-attachments/assets/92c0aceb-e16d-42ae-b9c6-8761298a8df6)
