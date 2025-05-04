@@ -1,9 +1,7 @@
-## a. 1D (Linear) Data Visualization
-- Open Tableau and load the Adult or Iris dataset.
-- For a 1D visualization, focus on a single dimension, such as Age (Adult dataset) or Sepal Length (Iris dataset).
-- Drag the dimension (e.g., Age or Sepal Length) to the Columns shelf.
-- For continuous data, Tableau will automatically generate a line or bar chart. Adjust the visualization type if necessary (e.g., Bar Chart).
-- Customize the chart by changing colors, adding labels, and adjusting the axis range.
+## Begin With
+- Open Tableau and load the adult_dataset.csv and Adult_NW1.csv. in it
+- Drag the Adult_NW1.csv to the interface and make a relation of both files as shown below.
+![Image](https://github.com/user-attachments/assets/4ffdcbd0-1792-4c4c-8ddd-85f66f4244a2)
 
 ## b. 2D (Planar) Data Visualization
 - Load the dataset into Tableau.
