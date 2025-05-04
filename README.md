@@ -7,21 +7,3 @@ This repository contains all lab work for the **Third Year - Information Technol
 1. **DSBDA** - Data Science and Big Data Analytics  
 2. **WAD** - Web Application Development  
 3. **CC** - Cybersecurity and Compliance  
-
----
-
-## 📌 Directory Structure
-
-```bash
-TE-IT-6th-Sem-Labs/
-│
-├── DSBDA/
-│   ├── A- Hadoop_Cloudera/
-│   ├── B- Python/
-│   ├── C- Tableau/
-│
-├── WAD/
-│   ├── Not yet added/
-│
-└── CC/
-    ├── Not yet added/
