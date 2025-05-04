@@ -72,6 +72,7 @@ hive> select * from flight;
 **▶️ Significance:** Retrieves and displays all records from the `flight` table.
 
 ```sql
+// create a file name f.txt on desktop and add values in similar form eg. 123,2009,'mumbai',30.6
 hive> load data local inpath "f.txt"
     > overwrite into table flight;
 ```
@@ -118,6 +119,7 @@ hive> select * from flight;
 hive> create index flight_index on table flight(fno)
     > as 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler'  
     > WITH DEFERRED REBUILD;
+// Can replace 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' with 'COMPACT'
 ```
 **▶️ Significance:** Creates an index on `fno` column to improve query performance (deferred rebuild means index will be built later).
 
@@ -147,6 +149,7 @@ hive> create table hive_int(id int,name varchar(10),sal float)
 **▶️ Significance:** Creates a managed table `hive_int` for employee data.
 
 ```sql
+// Create a file name data.txt on desktop and add values in similar form eg. 1,'aakash',50.0
 hive> load data local inpath 'data.txt' into table hive_int;
 ```
 **▶️ Significance:** Loads local data from `data.txt` into `hive_int`.
@@ -179,9 +182,10 @@ hive> select * from hive_ext;
 
 ---
 
-## 🅔 HDFS and External Table Setup
+## 🅔 Find the average departure delay per day in 2008
 
 ```bash
+//Open A Terminal, that's Terminal 1 for you
 [cloudera@quickstart ~]$ hdfs dfs -mkdir /HiveDirectory
 ```
 **▶️ Significance:** Creates a new directory in HDFS for storing Hive data.
@@ -209,3 +213,60 @@ hive> create external table emplist (Id int, Name string , Salary float)
 hive> select * from emplist;
 ```
 **▶️ Significance:** Displays contents of `emplist` (if data was successfully loaded).
+
+```sql
+hive> CREATE TABLE flight_data(
+    >    year INT,
+    >    month INT,
+    >    day INT,
+    >    day_of_week INT,
+    >    dep_time INT,
+    >    crs_dep_time INT,
+    >    arr_time INT,
+    >    crs_arr_time INT,
+    >    unique_carrier STRING,
+    >    flight_num INT,
+    >    tail_num STRING,
+    >    actual_elapsed_time INT,
+    >    crs_elapsed_time INT,
+    >    air_time INT,
+    >    arr_delay INT,
+    >    dep_delay INT,
+    >    origin STRING,
+    >    dest STRING,
+    >    distance INT,
+    >    taxi_in INT,
+    >    taxi_out INT,
+    >    cancelled INT,
+    >    cancellation_code STRING,
+    >    diverted INT,
+    >    carrier_delay STRING,
+    >    weather_delay STRING,
+    >    nas_delay STRING,
+    >    security_delay STRING,
+    >    late_aircraft_delay STRING
+    > )
+    > ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ',';
+```
+**▶️ Significance:** Defines the structure of the `flight_data` table. It maps each column in the CSV file to its corresponding data type. The use of `ROW FORMAT DELIMITED` and `FIELDS TERMINATED BY ','` specifies that the data is in CSV format.
+```sql
+//Now open another terminal, that's terminal 2 for you
+hive> [cloudera@quickstart ~]$ hive
+```
+**▶️ Significance:** You open a new Hive shell session in another terminal to continue executing commands. This simulates a typical use case where Hive runs independently from the file system terminal.
+```sql
+//NEED A CSV FILE TO PERFORM, HERE IT IS 2008.CSV, MUST BE GIVEN TO YOU BY EXAMINER
+hive> LOAD DATA LOCAL INPATH '/home/cloudera/2008.csv' OVERWRITE INTO TABLE flight_data;
+```
+**▶️ Significance:** Loads data from the local file system into the `flight_data` Hive table. The `OVERWRITE` keyword ensures any previous data in the table is replaced with this fresh dataset.
+```sql
+hive> SHOW TABLES;
+```
+```sql
+hive> SELECT avg(arr_delay)
+    FROM flight_data
+    WHERE month = 1
+    AND origin = 'SFO';
+```
+**▶️ Significance:** Computes the average arrival delay of flights originating from SFO in the month of January. This is a basic aggregation query demonstrating the analytical power of Hive.
