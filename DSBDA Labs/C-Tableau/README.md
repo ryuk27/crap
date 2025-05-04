@@ -32,6 +32,7 @@
 - Click on `Circle Y` and change Automatic to Circle, add `Node` in Color and Lable part, `Relationship1` in Detail.
 - Visualization : Default
   ![Image](https://github.com/user-attachments/assets/9db704e6-7905-45ef-94df-c2b7534c3093)
+  ![Image](https://github.com/user-attachments/assets/6f68e555-9b2b-4ae5-b6c9-e487f9b177a7)
 
 ### 6. Multidimensional Visualization
 - Add `Hours-Per-Week` in COLUMNS, right click and chose AVG for it.
