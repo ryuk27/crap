@@ -16,7 +16,7 @@ This repository contains all lab work for the **Third Year - Information Technol
 TE-IT-6th-Sem-Labs/
 │
 ├── DSBDA/
-│   ├── A- Hadoop/Cloudera/
+│   ├── A- Hadoop_Cloudera/
 │   ├── B- Python/
 │   ├── C- Tableau/
 │
