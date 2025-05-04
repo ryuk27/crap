@@ -37,7 +37,7 @@
 ### 6. Multidimensional Visualization
 - Add `Hours-Per-Week` in COLUMNS, right click and chose AVG for it.
 - Add `Age` in ROWS, right click and chose AVG for it.
-- In Filters, add `Gender`, in Colors add `Education`, in Size add `SUM(Capital-Gain)`, in Tooltip add `Income`, `Occupation` and `Race` and set the to ATTRIBUTE, finally add `Node` in Detail.
+- In Filters, add `Gender`, in Colors add `Education`, in Size add `SUM(Capital-Gain)`, in Tooltip add `Income`, `Occupation` and `Race` and set them to ATTRIBUTE, finally add `Node` in Detail.
 - Visualization : Default
   ![Image](https://github.com/user-attachments/assets/dbc0e7b8-09b4-45ff-85a0-990a11c4032b)
 
@@ -45,7 +45,7 @@
 - Right-click anywhere in the Data pane
 - Select "Create Calculated Field...".
 - In the dialog box: Name the field and Enter the formula - `1994 - [Age]`
-- Here it is named as `Year of Birth`, add it in COLUMNS and `Occupation` in ROWS, right click on it and change to CNTD.
+- Here it is named as `Year of Birth`, add it in COLUMNS, right click and uncheck the Dimension and add `Occupation` in ROWS, right click on it and change to CNTD.
 - Add `Education` and `Gender` in Filters and `Income` in Colors.
 - Visualization : Line Continuous
   ![Image](https://github.com/user-attachments/assets/91a6c340-d748-49ce-bf4d-70ed12a13512)
