@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body { background: #f8f9fc; }
+    .sidebar {
+      background: #4e73df; color: white; min-height: 100vh;
+    }
+    .sidebar .nav-link { color: rgba(255,255,255,0.8); }
+    .sidebar .nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .card { box-shadow: 0 0.15rem 1.75rem rgba(58,59,69,.15); }
+    .card-border-left { border-left: .25rem solid; }
+    .login-form {
+      max-width: 400px; margin: 100px auto; background: white;
+      padding: 25px; border-radius: 5px;
+    }
+    .topbar { background: white; box-shadow: 0 0.15rem 1.75rem rgba(58,59,69,.15); }
+    #dashboard-content { display: none; }
+    @media (max-width:768px) {
+      .sidebar { position: fixed; left: -100%; transition: all 0.3s; z-index: 999; width: 14rem; }
+      .sidebar.show { left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login -->
+  <div class="container" id="login-container">
+    <form id="loginForm" class="login-form text-center shadow">
+      <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+      <h4 class="text-primary mb-4">Exam Admin Login</h4>
+      <input type="text" id="username" placeholder="Username" required class="form-control mb-3">
+      <input type="password" id="password" placeholder="Password" required class="form-control mb-3">
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+      <div class="alert alert-danger mt-3 d-none" id="login-error">Invalid credentials</div>
+    </form>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="container-fluid" id="dashboard-content">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 sidebar p-3">
+        <h5><i class="fas fa-graduation-cap me-2"></i>Exam Admin</h5>
+        <ul class="nav flex-column mt-4">
+          <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-calendar me-2"></i>Exam Schedule</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-file-alt me-2"></i>Question Bank</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-users me-2"></i>Students</a></li>
+          <li class="nav-item mt-3"><a class="nav-link" href="#"><i class="fas fa-chart-bar me-2"></i>Statistics</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-trophy me-2"></i>Performance</a></li>
+          <li class="nav-item mt-3"><a class="nav-link" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="col-md-9 col-lg-10 px-4">
+        <div class="topbar d-flex justify-content-between align-items-center py-3">
+          <h2>Dashboard</h2>
+          <button id="sidebarToggle" class="btn btn-primary d-md-none"><i class="fas fa-bars"></i></button>
+        </div>
+
+        <!-- Cards -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <div class="card card-border-left border-primary p-3">
+              <h6>Total Exams</h6>
+              <p class="h5">3+5 (P&T)</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card card-border-left border-success p-3">
+              <h6>Active Students</h6>
+              <p class="h5">80</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card card-border-left border-info p-3">
+              <h6>Upcoming Exams</h6>
+              <p class="h5">6</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card card-border-left border-warning p-3">
+              <h6>Pass Rate</h6>
+              <p class="h5">78%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tables -->
+        <div class="row">
+          <div class="col-lg-6 mb-4">
+            <div class="card p-3">
+              <h6>Recent Exams</h6>
+              <table class="table">
+                <tr><th>Exam</th><th>Date</th><th>Status</th></tr>
+                <tr><td>CNS Lab</td><td>Apr 26</td><td><span class="badge bg-success">Done</span></td></tr>
+                <tr><td>DSBDA Lab</td><td>May 4</td><td><span class="badge bg-success">Done</span></td></tr>
+                <tr><td>Lab Practice</td><td>May 7</td><td><span class="badge bg-warning">Upcoming</span></td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4">
+            <div class="card p-3">
+              <h6>Top Students</h6>
+              <table class="table">
+                <tr><th>Name</th><th>Score</th><th>Progress</th></tr>
+                <tr>
+                  <td>Tanvi</td><td>98%</td>
+                  <td><div class="progress"><div class="progress-bar bg-success" style="width:98%"></div></div></td>
+                </tr>
+                <tr>
+                  <td>Ram</td><td>95%</td>
+                  <td><div class="progress"><div class="progress-bar bg-success" style="width:95%"></div></div></td>
+                </tr>
+                <tr>
+                  <td>Dipesh</td><td>83%</td>
+                  <td><div class="progress"><div class="progress-bar bg-success" style="width:83%"></div></div></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      const loginError = document.getElementById('login-error');
+      const dashboard = document.getElementById('dashboard-content');
+      const loginPage = document.getElementById('login-container');
+      const logoutBtn = document.getElementById('logout-btn');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.querySelector('.sidebar');
+
+      const showDashboard = () => {
+        loginPage.style.display = 'none';
+        dashboard.style.display = 'block';
+      };
+
+      const showLogin = () => {
+        dashboard.style.display = 'none';
+        loginPage.style.display = 'block';
+      };
+
+      if (sessionStorage.getItem('loggedIn') === 'true') showDashboard();
+
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        if (user === 'admin' && pass === '1q2w3e4r') {
+          sessionStorage.setItem('loggedIn', 'true');
+          showDashboard();
+        } else {
+          loginError.classList.remove('d-none');
+          setTimeout(() => loginError.classList.add('d-none'), 3000);
+        }
+      });
+
+      if (logoutBtn) logoutBtn.addEventListener('click', e => {
+        e.preventDefault();
+        sessionStorage.removeItem('loggedIn');
+        showLogin();
+      });
+
+      if (sidebarToggle) sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+      });
+    });
+  </script>
+</body>
+</html>
