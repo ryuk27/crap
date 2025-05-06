@@ -1,0 +1,274 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success {
+            color: green;
+            font-size: 16px;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f8f0;
+            border-radius: 4px;
+            display: none;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,.1);
+            border-radius: 50%;
+            border-top-color: #4CAF50;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .view-data-btn {
+            background-color: #2196F3;
+            margin-top: 20px;
+        }
+        .view-data-btn:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Registration</h1>
+    
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <div class="error" id="username-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error" id="email-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <div class="error" id="password-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <div class="error" id="confirmPassword-error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <select id="country" name="country">
+                <option value="">Select Country</option>
+                <option value="USA">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="India">India</option>
+                <option value="Other">Other</option>
+            </select>
+            <div class="error" id="country-error"></div>
+        </div>
+        
+        <button type="submit" id="submitBtn">Register</button>
+        <span class="spinner" id="loadingSpinner"></span>
+    </form>
+    
+    <div class="success" id="successMessage">
+        Registration successful! User data has been saved.
+    </div>
+    
+    <button class="view-data-btn" id="viewDataBtn">View Registered Users</button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const successMessage = document.getElementById('successMessage');
+            const viewDataBtn = document.getElementById('viewDataBtn');
+            
+            // Initialize usersData in localStorage if it doesn't exist
+            if (!localStorage.getItem('usersData')) {
+                localStorage.setItem('usersData', JSON.stringify([]));
+            }
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Reset error messages
+                document.querySelectorAll('.error').forEach(el => el.textContent = '');
+                
+                // Get form values
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const country = document.getElementById('country').value;
+                
+                // Validate form
+                let isValid = true;
+                
+                if (username === '') {
+                    document.getElementById('username-error').textContent = 'Username is required';
+                    isValid = false;
+                }
+                
+                if (email === '') {
+                    document.getElementById('email-error').textContent = 'Email is required';
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    document.getElementById('email-error').textContent = 'Please enter a valid email';
+                    isValid = false;
+                }
+                
+                if (password === '') {
+                    document.getElementById('password-error').textContent = 'Password is required';
+                    isValid = false;
+                } else if (password.length < 6) {
+                    document.getElementById('password-error').textContent = 'Password must be at least 6 characters';
+                    isValid = false;
+                }
+                
+                if (confirmPassword === '') {
+                    document.getElementById('confirmPassword-error').textContent = 'Please confirm your password';
+                    isValid = false;
+                } else if (password !== confirmPassword) {
+                    document.getElementById('confirmPassword-error').textContent = 'Passwords do not match';
+                    isValid = false;
+                }
+                
+                if (country === '') {
+                    document.getElementById('country-error').textContent = 'Please select a country';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Show loading spinner
+                    submitBtn.disabled = true;
+                    loadingSpinner.style.display = 'inline-block';
+                    
+                    // Create user data object
+                    const userData = {
+                        id: Date.now(), // Generate unique ID
+                        username: username,
+                        email: email,
+                        password: password, // In a real app, this should be hashed
+                        country: country,
+                        registrationDate: new Date().toISOString()
+                    };
+                    
+                    // Simulate AJAX POST request
+                    simulateAjaxPost(userData)
+                        .then(response => {
+                            // Add to local storage
+                            const usersData = JSON.parse(localStorage.getItem('usersData'));
+                            usersData.push(userData);
+                            localStorage.setItem('usersData', JSON.stringify(usersData));
+                            
+                            // Reset form
+                            form.reset();
+                            
+                            // Show success message
+                            successMessage.style.display = 'block';
+                            
+                            // Hide it after 3 seconds
+                            setTimeout(() => {
+                                successMessage.style.display = 'none';
+                            }, 3000);
+                        })
+                        .catch(error => {
+                            alert('Error: ' + error.message);
+                        })
+                        .finally(() => {
+                            // Hide loading spinner
+                            submitBtn.disabled = false;
+                            loadingSpinner.style.display = 'none';
+                        });
+                }
+            });
+            
+            viewDataBtn.addEventListener('click', function() {
+                window.location.href = 'users-list.html';
+            });
+            
+            // Helper function to validate email
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            // Function to simulate AJAX POST request
+            function simulateAjaxPost(data) {
+                return new Promise((resolve, reject) => {
+                    // Simulate network delay
+                    setTimeout(() => {
+                        // Simulate successful response
+                        if (Math.random() > 0.1) { // 90% success rate
+                            resolve({
+                                success: true,
+                                message: 'User registered successfully',
+                                data: data
+                            });
+                        } else {
+                            // Simulate error
+                            reject(new Error('Network error. Please try again.'));
+                        }
+                    }, 1500); // 1.5 seconds delay
+                });
+            }
+        });
+    </script>
+</body>
+</html>
