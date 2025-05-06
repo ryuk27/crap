@@ -2,7 +2,8 @@
 
 ### 📝 Prerequisites:
 
-1. **Docker installed** (as per the previous steps).
+1. **Docker installed**
+- Download Docker Desktop: https://www.docker.com/products/docker-desktop/
 2. **VS Code** installed with the **Docker extension** (optional but recommended for convenience):
 
    * Install the **Docker extension** from the VS Code Extensions Marketplace.
