@@ -1,0 +1,228 @@
+<!-- users-list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .empty-message {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            color: #666;
+            text-align: center;
+        }
+        .actions {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .back-btn {
+            background-color: #2196F3;
+        }
+        .back-btn:hover {
+            background-color: #0b7dda;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registered Users</h1>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search users...">
+    </div>
+    
+    <div id="tableContainer">
+        <table id="usersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>Registration Date</th>
+                </tr>
+            </thead>
+            <tbody id="usersTableBody">
+                <!-- User data will be inserted here dynamically -->
+            </tbody>
+        </table>
+        
+        <div id="emptyMessage" class="empty-message" style="display: none;">
+            No registered users found.
+        </div>
+    </div>
+    
+    <div class="actions">
+        <button class="back-btn" id="backBtn">Back to Registration</button>
+        <button class="delete-btn" id="clearDataBtn">Clear All Data</button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usersTableBody = document.getElementById('usersTableBody');
+            const emptyMessage = document.getElementById('emptyMessage');
+            const backBtn = document.getElementById('backBtn');
+            const clearDataBtn = document.getElementById('clearDataBtn');
+            const searchInput = document.getElementById('searchInput');
+            
+            // Load and display user data
+            function loadUserData() {
+                const usersData = JSON.parse(localStorage.getItem('usersData')) || [];
+                
+                if (usersData.length === 0) {
+                    document.getElementById('usersTable').style.display = 'none';
+                    emptyMessage.style.display = 'block';
+                } else {
+                    document.getElementById('usersTable').style.display = 'table';
+                    emptyMessage.style.display = 'none';
+                    
+                    // Clear table body
+                    usersTableBody.innerHTML = '';
+                    
+                    // Add user data rows
+                    usersData.forEach(user => {
+                        const row = document.createElement('tr');
+                        
+                        // Format date
+                        const registrationDate = new Date(user.registrationDate);
+                        const formattedDate = registrationDate.toLocaleString();
+                        
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${escapeHtml(user.username)}</td>
+                            <td>${escapeHtml(user.email)}</td>
+                            <td>${escapeHtml(user.country)}</td>
+                            <td>${formattedDate}</td>
+                        `;
+                        
+                        usersTableBody.appendChild(row);
+                    });
+                }
+            }
+            
+            // Initial load
+            loadUserData();
+            
+            // Event Listeners
+            backBtn.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+            
+            clearDataBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to delete all user data?')) {
+                    localStorage.setItem('usersData', JSON.stringify([]));
+                    loadUserData();
+                }
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const usersData = JSON.parse(localStorage.getItem('usersData')) || [];
+                
+                if (searchTerm === '') {
+                    loadUserData();
+                    return;
+                }
+                
+                const filteredUsers = usersData.filter(user => 
+                    user.username.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm) ||
+                    user.country.toLowerCase().includes(searchTerm)
+                );
+                
+                if (filteredUsers.length === 0) {
+                    document.getElementById('usersTable').style.display = 'none';
+                    emptyMessage.style.display = 'block';
+                    emptyMessage.textContent = 'No users match your search.';
+                } else {
+                    document.getElementById('usersTable').style.display = 'table';
+                    emptyMessage.style.display = 'none';
+                    
+                    // Clear table body
+                    usersTableBody.innerHTML = '';
+                    
+                    // Add filtered user data rows
+                    filteredUsers.forEach(user => {
+                        const row = document.createElement('tr');
+                        
+                        // Format date
+                        const registrationDate = new Date(user.registrationDate);
+                        const formattedDate = registrationDate.toLocaleString();
+                        
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${escapeHtml(user.username)}</td>
+                            <td>${escapeHtml(user.email)}</td>
+                            <td>${escapeHtml(user.country)}</td>
+                            <td>${formattedDate}</td>
+                        `;
+                        
+                        usersTableBody.appendChild(row);
+                    });
+                }
+            });
+            
+            // Helper function to escape HTML to prevent XSS
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        });
+    </script>
+</body>
+</html>
