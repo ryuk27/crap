@@ -9,7 +9,7 @@
 3. **Create a new Angular project**:
 
    * Open **VS Code**.
-   * Open the **Terminal** (Press `Ctrl + `).
+   * Open the **Terminal**.
    * Run the following command to create your project:
 
      ```bash
